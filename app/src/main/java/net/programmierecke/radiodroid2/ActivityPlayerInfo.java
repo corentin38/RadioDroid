@@ -21,7 +21,9 @@ import android.widget.Toast;
 
 import java.util.Map;
 
-public class ActivityPlayerInfo extends AppCompatActivity {
+import net.programmierecke.radiodroid2.ActivityBase;
+
+public class ActivityPlayerInfo extends ActivityBase {
 	ProgressDialog itsProgressLoading;
 	TextView aTextViewName;
 	ImageButton buttonStop;
@@ -40,9 +42,7 @@ public class ActivityPlayerInfo extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_player_status);
-
-		Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-		setSupportActionBar(myToolbar);
+		setUpToolbar(false);
 
 		Bundle anExtras = getIntent().getExtras();
 
