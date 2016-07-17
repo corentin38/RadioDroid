@@ -19,9 +19,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import net.programmierecke.radiodroid2.ActivityBase;
 import net.programmierecke.radiodroid2.data.DataRadioStation;
 
-public class ActivityRadioStationDetail extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
+public class ActivityRadioStationDetail extends ActivityBase implements TimePickerDialog.OnTimeSetListener {
 	private ProgressDialog itsProgressLoading;
 	private DataRadioStation itsStation;
 	private MenuItem m_Menu_Star;
@@ -33,9 +34,7 @@ public class ActivityRadioStationDetail extends AppCompatActivity implements Tim
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_station_detail);
-
-		Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-		setSupportActionBar(myToolbar);
+		setUpToolbar(true);
 
 		Bundle anExtras = getIntent().getExtras();
 		final String aStationID = anExtras.getString("stationid");
