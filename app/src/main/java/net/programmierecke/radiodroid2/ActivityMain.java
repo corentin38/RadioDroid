@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import net.programmierecke.radiodroid2.ActivityBase;
 import net.programmierecke.radiodroid2.interfaces.IFragmentRefreshable;
 import net.programmierecke.radiodroid2.interfaces.IFragmentSearchable;
 
@@ -28,7 +29,7 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-public class ActivityMain extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class ActivityMain extends ActivityBase implements SearchView.OnQueryTextListener {
 	private SearchView mSearchView;
 
 	private static final String TAG = "RadioDroid";
@@ -44,12 +45,15 @@ public class ActivityMain extends AppCompatActivity implements SearchView.OnQuer
 	MenuItem menuItemSearch;
 	MenuItem menuItemRefresh;
 
+	private Toolbar mToolbar;
+
 	private SharedPreferences sharedPref;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_main);
+		mToolbar = setUpToolbar(true);
 
 		try {
 			File dir = new File(getFilesDir().getAbsolutePath());
@@ -66,13 +70,7 @@ public class ActivityMain extends AppCompatActivity implements SearchView.OnQuer
 		}
 		catch (Exception e){}
 
-		final Toolbar myToolbar = (Toolbar) findViewById(R.id.my_awesome_toolbar);
-		setSupportActionBar(myToolbar);
-
 		PlayerServiceUtil.bind(this);
-
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setHomeButtonEnabled(true);
 
 		mFragmentManager = getSupportFragmentManager();
 
@@ -94,49 +92,49 @@ public class ActivityMain extends AppCompatActivity implements SearchView.OnQuer
 				if (menuItem.getItemId() == R.id.nav_item_stations) {
 					f = new FragmentTabs();
 					menuItemSearch.setVisible(true);
-					myToolbar.setTitle(R.string.app_name);
+					mToolbar.setTitle(R.string.app_name);
 				}
 
 				if (menuItem.getItemId() == R.id.nav_item_starred) {
 					f = new FragmentStarred();
 					menuItemSearch.setVisible(false);
-					myToolbar.setTitle(R.string.nav_item_starred);
+					mToolbar.setTitle(R.string.nav_item_starred);
 				}
 
 				if (menuItem.getItemId() == R.id.nav_item_history) {
 					f = new FragmentHistory();
 					menuItemSearch.setVisible(false);
-					myToolbar.setTitle(R.string.nav_item_history);
+					mToolbar.setTitle(R.string.nav_item_history);
 				}
 
 				if (menuItem.getItemId() == R.id.nav_item_serverinfo) {
 					f = new FragmentServerInfo();
 					menuItemSearch.setVisible(false);
-					myToolbar.setTitle(R.string.nav_item_statistics);
+					mToolbar.setTitle(R.string.nav_item_statistics);
 				}
 
 				if (menuItem.getItemId() == R.id.nav_item_recordings) {
 					f = new FragmentRecordings();
 					menuItemSearch.setVisible(false);
-					myToolbar.setTitle(R.string.nav_item_recordings);
+					mToolbar.setTitle(R.string.nav_item_recordings);
 				}
 
 				if (menuItem.getItemId() == R.id.nav_item_alarm) {
 					f = new FragmentAlarm();
 					menuItemSearch.setVisible(false);
-					myToolbar.setTitle(R.string.nav_item_alarm);
+					mToolbar.setTitle(R.string.nav_item_alarm);
 				}
 
 				if (menuItem.getItemId() == R.id.nav_item_settings) {
 					f = new FragmentSettings();
 					menuItemSearch.setVisible(false);
-					myToolbar.setTitle(R.string.nav_item_settings);
+					mToolbar.setTitle(R.string.nav_item_settings);
 				}
 
 				if (menuItem.getItemId() == R.id.nav_item_about) {
 					f = new FragmentAbout();
 					menuItemSearch.setVisible(false);
-					myToolbar.setTitle(R.string.nav_item_about);
+					mToolbar.setTitle(R.string.nav_item_about);
 				}
 
 				FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
