@@ -263,9 +263,9 @@ public class ActivityMain extends ActivityBase implements SearchView.OnQueryText
 			mSearchView.setIconified(true);
 			queryEncoded = URLEncoder.encode(query, "utf-8");
 			queryEncoded = queryEncoded.replace("+","%20");
-			Search("http://www.radio-browser.info/webservice/json/stations/byname/"+queryEncoded);
+			Search(getString(R.string.radiobrowser_url_stations_byname) + queryEncoded);
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			Log.d(TAG, "Unable to submit request: <" + query + "> because of following error: " + e.getMessage());
 		}
 		return true;
 	}

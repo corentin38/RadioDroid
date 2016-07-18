@@ -88,4 +88,6 @@
     <string name="image_button_record">Record</string>
     <string name="image_button_delete">Delete</string>
     <string name="image_button_more">More</string>
+
+    <string name="radiobrowser_url_stations_byname">http://www.radio-browser.info/webservice/json/stations/byname/</string>
 </resources>
