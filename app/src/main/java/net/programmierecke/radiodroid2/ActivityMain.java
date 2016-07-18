@@ -55,17 +55,15 @@ public class ActivityMain extends ActivityBase implements SearchView.OnQueryText
 		PlayerServiceUtil.bind(this);
 
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-		mNavigationView = (NavigationView) findViewById(R.id.my_navigation_view) ;
-
-		initNavigationView();
-
-		//myToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.main_toolbar);
-		ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout, R.string.app_name,R.string.app_name);
+		ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout, R.string.app_name, R.string.app_name);
 		mDrawerLayout.addDrawerListener(mDrawerToggle);
 		mDrawerToggle.syncState();
+
+		initNavigationView();
 	}
 
 	private void initNavigationView() {
+		mNavigationView = (NavigationView) findViewById(R.id.my_navigation_view) ;
 		mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 			@Override
 			public boolean onNavigationItemSelected(MenuItem menuItem) {
