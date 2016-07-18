@@ -51,20 +51,7 @@ public class ActivityMain extends ActivityBase implements SearchView.OnQueryText
 		setContentView(R.layout.layout_main);
 		mToolbar = setUpToolbar(true);
 
-		try {
-			File dir = new File(getFilesDir().getAbsolutePath());
-			if (dir.isDirectory()) {
-				String[] children = dir.list();
-				for (int i = 0; i < children.length; i++) {
-					Log.e("MAIN", "delete file:" + children[i]);
-					try {
-						new File(dir, children[i]).delete();
-					}
-					catch (Exception e){}
-				}
-			}
-		}
-		catch (Exception e){}
+		clearFilesDirectory();
 
 		PlayerServiceUtil.bind(this);
 
@@ -153,6 +140,13 @@ public class ActivityMain extends ActivityBase implements SearchView.OnQueryText
 		ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout, R.string.app_name,R.string.app_name);
 		mDrawerLayout.addDrawerListener(mDrawerToggle);
 		mDrawerToggle.syncState();
+	}
+
+	private void clearFilesDirectory() {
+		for (File file : getFilesDir().listFiles()) {
+			Log.d(TAG, "Removing file:" + file.getName());
+			file.delete();
+		}
 	}
 
 	@Override
