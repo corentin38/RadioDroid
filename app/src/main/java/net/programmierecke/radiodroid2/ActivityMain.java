@@ -162,23 +162,20 @@ public class ActivityMain extends ActivityBase implements SearchView.OnQueryText
 	}
 
 	@Override
-	public void onRequestPermissionsResult(int requestCode,
-										   String permissions[], int[] grantResults) {
-		Log.w(TAG,"on request permissions result:"+requestCode);
+	public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+		Log.d(TAG, "onRequestPermissionsResult - requestCode: " + requestCode);
 		switch (requestCode) {
-			case Utils.REQUEST_EXTERNAL_STORAGE: {
-				// If request is cancelled, the result arrays are empty.
-				if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-					if (fragRefreshable != null){
-						Log.w(TAG,"REFRESH VIEW");
-						fragRefreshable.Refresh();
-					}
-				} else {
-					Toast toast = Toast.makeText(this, getResources().getString(R.string.error_record_needs_write), Toast.LENGTH_SHORT);
-					toast.show();
+		case Utils.REQUEST_EXTERNAL_STORAGE:
+			// If request is cancelled, the result arrays are empty.
+			if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+				Log.d(TAG, "Refreshing current fragment if refreshable");
+				if (fragRefreshable != null){
+					fragRefreshable.Refresh();
 				}
-				return;
+			} else {
+				Toast.makeText(this, getString(R.string.error_record_needs_write), Toast.LENGTH_LONG).show();
 			}
+			return;
 		}
 	}
 
