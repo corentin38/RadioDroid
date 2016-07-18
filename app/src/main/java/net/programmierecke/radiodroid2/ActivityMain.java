@@ -56,86 +56,102 @@ public class ActivityMain extends ActivityBase implements SearchView.OnQueryText
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 		mNavigationView = (NavigationView) findViewById(R.id.my_navigation_view) ;
 
-		mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-			@Override
-			public boolean onNavigationItemSelected(MenuItem menuItem) {
-				mDrawerLayout.closeDrawers();
-				Fragment f = null;
-
-				if (menuItem.getItemId() == R.id.nav_item_player_status) {
-					Intent intent = new Intent(ActivityMain.this, ActivityPlayerInfo.class);
-					startActivity(intent);
-					return false;
-				}
-
-				if (menuItem.getItemId() == R.id.nav_item_stations) {
-					f = new FragmentTabs();
-					menuItemSearch.setVisible(true);
-					mToolbar.setTitle(R.string.app_name);
-				}
-
-				if (menuItem.getItemId() == R.id.nav_item_starred) {
-					f = new FragmentStarred();
-					menuItemSearch.setVisible(false);
-					mToolbar.setTitle(R.string.nav_item_starred);
-				}
-
-				if (menuItem.getItemId() == R.id.nav_item_history) {
-					f = new FragmentHistory();
-					menuItemSearch.setVisible(false);
-					mToolbar.setTitle(R.string.nav_item_history);
-				}
-
-				if (menuItem.getItemId() == R.id.nav_item_serverinfo) {
-					f = new FragmentServerInfo();
-					menuItemSearch.setVisible(false);
-					mToolbar.setTitle(R.string.nav_item_statistics);
-				}
-
-				if (menuItem.getItemId() == R.id.nav_item_recordings) {
-					f = new FragmentRecordings();
-					menuItemSearch.setVisible(false);
-					mToolbar.setTitle(R.string.nav_item_recordings);
-				}
-
-				if (menuItem.getItemId() == R.id.nav_item_alarm) {
-					f = new FragmentAlarm();
-					menuItemSearch.setVisible(false);
-					mToolbar.setTitle(R.string.nav_item_alarm);
-				}
-
-				if (menuItem.getItemId() == R.id.nav_item_settings) {
-					f = new FragmentSettings();
-					menuItemSearch.setVisible(false);
-					mToolbar.setTitle(R.string.nav_item_settings);
-				}
-
-				if (menuItem.getItemId() == R.id.nav_item_about) {
-					f = new FragmentAbout();
-					menuItemSearch.setVisible(false);
-					mToolbar.setTitle(R.string.nav_item_about);
-				}
-
-				FragmentTransaction xfragmentTransaction = getSupportFragmentManager().beginTransaction();
-				xfragmentTransaction.replace(R.id.containerView,f).commit();
-				fragRefreshable = null;
-				fragSearchable = null;
-				if (f instanceof IFragmentRefreshable) {
-					fragRefreshable = (IFragmentRefreshable) f;
-				}
-				if (f instanceof IFragmentSearchable) {
-					fragSearchable = (IFragmentSearchable) f;
-				}
-				menuItemRefresh.setVisible(fragRefreshable != null);
-
-				return false;
-			}
-		});
+		initNavigationView();
 
 		//myToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.main_toolbar);
 		ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout, R.string.app_name,R.string.app_name);
 		mDrawerLayout.addDrawerListener(mDrawerToggle);
 		mDrawerToggle.syncState();
+	}
+
+	private void initNavigationView() {
+		mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+			@Override
+			public boolean onNavigationItemSelected(MenuItem menuItem) {
+				mDrawerLayout.closeDrawers();
+
+				int itemId = menuItem.getItemId();
+				selectFragment(itemId);
+
+				return false;
+			}
+		});
+	}
+
+	private void selectFragment(int itemId) {
+		Fragment f = null;
+
+		switch (itemId) {
+
+		case R.id.nav_item_player_status:
+			Intent intent = new Intent(ActivityMain.this, ActivityPlayerInfo.class);
+			startActivity(intent);
+			return;
+
+		case R.id.nav_item_stations:
+			f = new FragmentTabs();
+			menuItemSearch.setVisible(true);
+			mToolbar.setTitle(R.string.app_name);
+			break;
+
+		case R.id.nav_item_starred:
+			f = new FragmentStarred();
+			menuItemSearch.setVisible(false);
+			mToolbar.setTitle(R.string.nav_item_starred);
+			break;
+
+		case R.id.nav_item_history:
+			f = new FragmentHistory();
+			menuItemSearch.setVisible(false);
+			mToolbar.setTitle(R.string.nav_item_history);
+			break;
+
+		case R.id.nav_item_serverinfo:
+			f = new FragmentServerInfo();
+			menuItemSearch.setVisible(false);
+			mToolbar.setTitle(R.string.nav_item_statistics);
+			break;
+
+		case R.id.nav_item_recordings:
+			f = new FragmentRecordings();
+			menuItemSearch.setVisible(false);
+			mToolbar.setTitle(R.string.nav_item_recordings);
+			break;
+
+		case R.id.nav_item_alarm:
+			f = new FragmentAlarm();
+			menuItemSearch.setVisible(false);
+			mToolbar.setTitle(R.string.nav_item_alarm);
+			break;
+
+		case R.id.nav_item_settings:
+			f = new FragmentSettings();
+			menuItemSearch.setVisible(false);
+			mToolbar.setTitle(R.string.nav_item_settings);
+			break;
+
+		case R.id.nav_item_about:
+			f = new FragmentAbout();
+			menuItemSearch.setVisible(false);
+			mToolbar.setTitle(R.string.nav_item_about);
+			break;
+
+		default:
+			break;
+		}
+
+		FragmentTransaction xfragmentTransaction = getSupportFragmentManager().beginTransaction();
+		xfragmentTransaction.replace(R.id.containerView, f).commit();
+		fragRefreshable = null;
+		fragSearchable = null;
+		if (f instanceof IFragmentRefreshable) {
+			fragRefreshable = (IFragmentRefreshable) f;
+		}
+		if (f instanceof IFragmentSearchable) {
+			fragSearchable = (IFragmentSearchable) f;
+		}
+		menuItemRefresh.setVisible(fragRefreshable != null);
+
 	}
 
 	private void clearFilesDirectory() {
