@@ -107,8 +107,6 @@ public class ActivityMain extends ActivityBase implements SearchView.OnQueryText
 
 		case R.id.nav_item_recordings:
 			f = new FragmentRecordings();
-			menuItemSearch.setVisible(false);
-			mToolbar.setTitle(R.string.nav_item_recordings);
 			break;
 
 		case R.id.nav_item_alarm:

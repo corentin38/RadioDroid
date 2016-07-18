@@ -58,6 +58,15 @@ public class FragmentRecordings extends Fragment implements IFragmentRefreshable
         return view;
     }
 
+    @Override
+    public void onActivityCreated (Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        IMainView mainActivity = (IMainView) getActivity();
+        mainActivity.setRefreshableFragment(this);
+        mainActivity.setToolbarTitle(R.string.nav_item_recordings);
+    }
+
     protected void RefreshListGui(){
         Log.d(TAG, "RefreshListGUI()");
 
