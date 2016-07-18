@@ -48,6 +48,14 @@ public class FragmentAlarm extends Fragment implements TimePickerDialog.OnTimeSe
         return view;
     }
 
+    @Override
+    public void onActivityCreated (Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        IMainView mainActivity = (IMainView) getActivity();
+        mainActivity.setToolbarTitle(R.string.nav_item_alarm);
+    }
+
     private void RefreshList() {
         adapterRadioAlarm.clear();
         for(DataRadioStationAlarm alarm: ram.getList()){
