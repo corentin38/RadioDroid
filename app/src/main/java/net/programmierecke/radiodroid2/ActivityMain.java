@@ -99,8 +99,6 @@ public class ActivityMain extends ActivityBase implements SearchView.OnQueryText
 
 		case R.id.nav_item_history:
 			f = new FragmentHistory();
-			menuItemSearch.setVisible(false);
-			mToolbar.setTitle(R.string.nav_item_history);
 			break;
 
 		case R.id.nav_item_serverinfo:

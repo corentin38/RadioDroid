@@ -71,4 +71,13 @@ public class FragmentHistory extends Fragment {
 
         return view;
     }
+
+    @Override
+    public void onActivityCreated (Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        IMainView mainActivity = (IMainView) getActivity();
+        mainActivity.setToolbarTitle(R.string.nav_item_history);
+    }
+
 }
