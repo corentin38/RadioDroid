@@ -13,4 +13,13 @@ public class FragmentAbout extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.layout_about,null);
     }
+
+    @Override
+    public void onActivityCreated (Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        IMainView mainActivity = (IMainView) getActivity();
+        mainActivity.setToolbarTitle(R.string.nav_item_about);
+    }
+
 }
