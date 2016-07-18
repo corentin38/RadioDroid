@@ -211,7 +211,7 @@ public class ActivityMain extends ActivityBase implements SearchView.OnQueryText
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case android.R.id.home:
-				mDrawerLayout.openDrawer(GravityCompat.START);  // OPEN DRAWER
+				mDrawerLayout.openDrawer(GravityCompat.START);
 				return true;
 			case R.id.action_refresh:
 				if (fragRefreshable != null){
@@ -224,6 +224,7 @@ public class ActivityMain extends ActivityBase implements SearchView.OnQueryText
 
 	@Override
 	protected void onResume() {
+		Log.d(TAG, "onResume");
 		super.onResume();
 
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
