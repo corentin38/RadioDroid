@@ -24,12 +24,13 @@ import android.widget.Toast;
 import net.programmierecke.radiodroid2.ActivityBase;
 import net.programmierecke.radiodroid2.interfaces.IFragmentRefreshable;
 import net.programmierecke.radiodroid2.interfaces.IFragmentSearchable;
+import net.programmierecke.radiodroid2.interfaces.IMainView;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
-public class ActivityMain extends ActivityBase implements SearchView.OnQueryTextListener {
+public class ActivityMain extends ActivityBase implements SearchView.OnQueryTextListener, IMainView {
 
 	private static final String TAG = "RD_MAIN";
 
@@ -152,6 +153,20 @@ public class ActivityMain extends ActivityBase implements SearchView.OnQueryText
 		}
 		menuItemRefresh.setVisible(fragRefreshable != null);
 
+	}
+
+	public void setRefreshableFragment(IFragmentRefreshable refreshable) {
+		menuItemRefresh.setVisible(true);
+		fragRefreshable = refreshable;
+	}
+
+	public void setSearchableFragment(IFragmentSearchable searchable) {
+		menuItemSearch.setVisible(true);
+		fragSearchable = searchable;
+	}
+
+	public void setToolbarTitle(int titleId) {
+		mToolbar.setTitle(titleId);
 	}
 
 	private void clearFilesDirectory() {
