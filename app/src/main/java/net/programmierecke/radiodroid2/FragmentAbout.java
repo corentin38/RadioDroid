@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import net.programmierecke.radiodroid2.interfaces.IMainView;
+
 public class FragmentAbout extends Fragment {
     @Nullable
     @Override

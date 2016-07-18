@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import net.programmierecke.radiodroid2.adapters.ItemAdapterStation;
 import net.programmierecke.radiodroid2.data.DataRadioStation;
+import net.programmierecke.radiodroid2.interfaces.IMainView;
 
 public class FragmentHistory extends Fragment {
     private ListView lv;

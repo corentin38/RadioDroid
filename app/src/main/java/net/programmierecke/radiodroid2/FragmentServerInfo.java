@@ -14,6 +14,7 @@ import android.widget.Toast;
 import net.programmierecke.radiodroid2.adapters.ItemAdapterStatistics;
 import net.programmierecke.radiodroid2.data.DataStatistics;
 import net.programmierecke.radiodroid2.interfaces.IFragmentRefreshable;
+import net.programmierecke.radiodroid2.interfaces.IMainView;
 
 public class FragmentServerInfo extends Fragment implements IFragmentRefreshable {
     private ItemAdapterStatistics itemAdapterStatistics;

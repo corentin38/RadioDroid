@@ -12,6 +12,7 @@ import android.widget.ListView;
 import net.programmierecke.radiodroid2.adapters.ItemAdapterStation;
 import net.programmierecke.radiodroid2.data.DataRadioStation;
 import net.programmierecke.radiodroid2.interfaces.IAdapterRefreshable;
+import net.programmierecke.radiodroid2.interfaces.IMainView;
 
 public class FragmentStarred extends Fragment implements IAdapterRefreshable {
     private ListView lv;
@@ -79,7 +80,6 @@ public class FragmentStarred extends Fragment implements IAdapterRefreshable {
         super.onActivityCreated(savedInstanceState);
 
         IMainView mainActivity = (IMainView) getActivity();
-        mainActivity.setRefreshableFragment(this);
         mainActivity.setToolbarTitle(R.string.nav_item_starred);
     }
 }

@@ -7,6 +7,7 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import android.util.Log;
 
 import net.programmierecke.radiodroid2.interfaces.IApplicationSelected;
+import net.programmierecke.radiodroid2.interfaces.IMainView;
 
 public class FragmentSettings extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener, IApplicationSelected {
 
