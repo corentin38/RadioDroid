@@ -30,24 +30,22 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 public class ActivityMain extends ActivityBase implements SearchView.OnQueryTextListener {
-	private SearchView mSearchView;
 
 	private static final String TAG = "RadioDroid";
 
-	DrawerLayout mDrawerLayout;
-	NavigationView mNavigationView;
-	FragmentManager mFragmentManager;
-	FragmentTransaction mFragmentTransaction;
-
-	IFragmentRefreshable fragRefreshable = null;
-	IFragmentSearchable fragSearchable = null;
-
-	MenuItem menuItemSearch;
-	MenuItem menuItemRefresh;
-
-	private Toolbar mToolbar;
+	private DrawerLayout        mDrawerLayout;
+	private NavigationView      mNavigationView;
+	private FragmentManager     mFragmentManager;
+	private FragmentTransaction mFragmentTransaction;
+	private SearchView          mSearchView;
+	private Toolbar             mToolbar;
+	private MenuItem            menuItemSearch;
+	private MenuItem            menuItemRefresh;
 
 	private SharedPreferences sharedPref;
+
+	private IFragmentRefreshable fragRefreshable = null;
+	private IFragmentSearchable  fragSearchable  = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
