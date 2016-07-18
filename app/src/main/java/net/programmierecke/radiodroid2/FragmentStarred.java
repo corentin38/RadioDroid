@@ -73,4 +73,13 @@ public class FragmentStarred extends Fragment implements IAdapterRefreshable {
 
         return view;
     }
+
+    @Override
+    public void onActivityCreated (Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        IMainView mainActivity = (IMainView) getActivity();
+        mainActivity.setRefreshableFragment(this);
+        mainActivity.setToolbarTitle(R.string.nav_item_starred);
+    }
 }
