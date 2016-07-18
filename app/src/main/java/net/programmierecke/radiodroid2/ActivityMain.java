@@ -31,7 +31,7 @@ import java.net.URLEncoder;
 
 public class ActivityMain extends ActivityBase implements SearchView.OnQueryTextListener {
 
-	private static final String TAG = "RadioDroid";
+	private static final String TAG = "RD_MAIN";
 
 	private DrawerLayout        mDrawerLayout;
 	private NavigationView      mNavigationView;
