@@ -21,9 +21,6 @@
             </intent-filter>
         </activity>
         <service android:name="net.programmierecke.radiodroid2.PlayerService"/>
-        <activity
-            android:name=".ActivityRadioStationDetail"
-            android:label="Station" />
 
         <activity
             android:name="net.programmierecke.radiodroid2.ActivityPlayerInfo"
