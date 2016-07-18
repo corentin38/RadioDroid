@@ -35,8 +35,6 @@ public class ActivityMain extends ActivityBase implements SearchView.OnQueryText
 
 	private DrawerLayout        mDrawerLayout;
 	private NavigationView      mNavigationView;
-	private FragmentManager     mFragmentManager;
-	private FragmentTransaction mFragmentTransaction;
 	private SearchView          mSearchView;
 	private Toolbar             mToolbar;
 	private MenuItem            menuItemSearch;
@@ -55,8 +53,6 @@ public class ActivityMain extends ActivityBase implements SearchView.OnQueryText
 
 		PlayerServiceUtil.bind(this);
 
-		mFragmentManager = getSupportFragmentManager();
-
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 		mNavigationView = (NavigationView) findViewById(R.id.my_navigation_view) ;
 
@@ -64,7 +60,7 @@ public class ActivityMain extends ActivityBase implements SearchView.OnQueryText
 			@Override
 			public boolean onNavigationItemSelected(MenuItem menuItem) {
 				mDrawerLayout.closeDrawers();
-				android.support.v4.app.Fragment f = null;
+				Fragment f = null;
 
 				if (menuItem.getItemId() == R.id.nav_item_player_status) {
 					Intent intent = new Intent(ActivityMain.this, ActivityPlayerInfo.class);
@@ -120,7 +116,7 @@ public class ActivityMain extends ActivityBase implements SearchView.OnQueryText
 					mToolbar.setTitle(R.string.nav_item_about);
 				}
 
-				FragmentTransaction xfragmentTransaction = mFragmentManager.beginTransaction();
+				FragmentTransaction xfragmentTransaction = getSupportFragmentManager().beginTransaction();
 				xfragmentTransaction.replace(R.id.containerView,f).commit();
 				fragRefreshable = null;
 				fragSearchable = null;
@@ -239,8 +235,8 @@ public class ActivityMain extends ActivityBase implements SearchView.OnQueryText
 			first = fragTabs;
 		}
 
-		mFragmentTransaction = mFragmentManager.beginTransaction();
-		mFragmentTransaction.replace(R.id.containerView,first).commit();
+		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+		fragmentTransaction.replace(R.id.containerView, first).commit();
 	}
 
 	public void Search(String query){
