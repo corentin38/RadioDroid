@@ -42,8 +42,6 @@ public class ActivityMain extends ActivityBase implements SearchView.OnQueryText
 	private MenuItem            menuItemSearch;
 	private MenuItem            menuItemRefresh;
 
-	private SharedPreferences sharedPref;
-
 	private IFragmentRefreshable fragRefreshable = null;
 	private IFragmentSearchable  fragSearchable  = null;
 
@@ -230,9 +228,7 @@ public class ActivityMain extends ActivityBase implements SearchView.OnQueryText
 	protected void onResume() {
 		super.onResume();
 
-		if (sharedPref == null) {
-			sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-		}
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
 		Fragment first = null;
 		if (sharedPref.getBoolean("starred_at_startup", false)) {
