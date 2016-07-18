@@ -24,6 +24,14 @@ public class FragmentSettings extends PreferenceFragmentCompat implements Shared
     }
 
     @Override
+    public void onActivityCreated (Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        IMainView mainActivity = (IMainView) getActivity();
+        mainActivity.setToolbarTitle(R.string.nav_item_settings);
+    }
+
+    @Override
     public void onPause() {
         getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
         super.onPause();
