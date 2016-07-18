@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import net.programmierecke.radiodroid2.interfaces.IMainView;
 import net.programmierecke.radiodroid2.interfaces.IFragmentRefreshable;
 import net.programmierecke.radiodroid2.interfaces.IFragmentSearchable;
 
@@ -65,6 +66,16 @@ public class FragmentTabs extends Fragment implements IFragmentRefreshable, IFra
         });
 
         return x;
+    }
+
+    @Override
+    public void onActivityCreated (Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        IMainView mainActivity = (IMainView) getActivity();
+        mainActivity.setSearchableFragment(this);
+        mainActivity.setRefreshableFragment(this);
+        mainActivity.setToolbarTitle(R.string.app_name);
     }
 
     private void setupViewPager(ViewPager viewPager) {
