@@ -36,6 +36,15 @@ public class FragmentServerInfo extends Fragment implements IFragmentRefreshable
         return view;
     }
 
+    @Override
+    public void onActivityCreated (Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        IMainView mainActivity = (IMainView) getActivity();
+        mainActivity.setRefreshableFragment(this);
+        mainActivity.setToolbarTitle(R.string.nav_item_statistics);
+    }
+
     void Download(final boolean forceUpdate){
         itsProgressLoading = ProgressDialog.show(getActivity(), "", getActivity().getString(R.string.progress_loading));
         new AsyncTask<Void, Void, String>() {

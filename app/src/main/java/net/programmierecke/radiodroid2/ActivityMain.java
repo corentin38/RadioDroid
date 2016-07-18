@@ -103,8 +103,6 @@ public class ActivityMain extends ActivityBase implements SearchView.OnQueryText
 
 		case R.id.nav_item_serverinfo:
 			f = new FragmentServerInfo();
-			menuItemSearch.setVisible(false);
-			mToolbar.setTitle(R.string.nav_item_statistics);
 			break;
 
 		case R.id.nav_item_recordings:
