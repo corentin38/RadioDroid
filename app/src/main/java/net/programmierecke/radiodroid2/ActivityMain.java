@@ -80,7 +80,13 @@ public class ActivityMain extends ActivityBase implements SearchView.OnQueryText
 	}
 
 	private void selectFragment(int itemId) {
-		Fragment f = null;
+		fragRefreshable = null;
+		fragSearchable = null;
+
+		menuItemRefresh.setVisible(false);
+		menuItemSearch.setVisible(false);
+
+		Fragment next = null;
 
 		switch (itemId) {
 
@@ -89,54 +95,21 @@ public class ActivityMain extends ActivityBase implements SearchView.OnQueryText
 			startActivity(intent);
 			return;
 
-		case R.id.nav_item_stations:
-			f = new FragmentTabs();
-			break;
-
-		case R.id.nav_item_starred:
-			f = new FragmentStarred();
-			break;
-
-		case R.id.nav_item_history:
-			f = new FragmentHistory();
-			break;
-
-		case R.id.nav_item_serverinfo:
-			f = new FragmentServerInfo();
-			break;
-
-		case R.id.nav_item_recordings:
-			f = new FragmentRecordings();
-			break;
-
-		case R.id.nav_item_alarm:
-			f = new FragmentAlarm();
-			break;
-
-		case R.id.nav_item_settings:
-			f = new FragmentSettings();
-			break;
-
-		case R.id.nav_item_about:
-			f = new FragmentAbout();
-			break;
+		case R.id.nav_item_stations: next = new FragmentTabs(); break;
+		case R.id.nav_item_starred: next = new FragmentStarred(); break;
+		case R.id.nav_item_history: next = new FragmentHistory(); break;
+		case R.id.nav_item_serverinfo: next = new FragmentServerInfo(); break;
+		case R.id.nav_item_recordings: next = new FragmentRecordings(); break;
+		case R.id.nav_item_alarm: next = new FragmentAlarm(); break;
+		case R.id.nav_item_settings: next = new FragmentSettings(); break;
+		case R.id.nav_item_about: next = new FragmentAbout(); break;
 
 		default:
 			break;
 		}
 
-		FragmentTransaction xfragmentTransaction = getSupportFragmentManager().beginTransaction();
-		xfragmentTransaction.replace(R.id.containerView, f).commit();
-		fragRefreshable = null;
-		fragSearchable = null;
-		if (f instanceof IFragmentRefreshable) {
-			fragRefreshable = (IFragmentRefreshable) f;
-		}
-		if (f instanceof IFragmentSearchable) {
-			fragSearchable = (IFragmentSearchable) f;
-		}
-		menuItemRefresh.setVisible(fragRefreshable != null);
-
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+		transaction.replace(R.id.containerView, next).commit();
 	}
 
 	public void setRefreshableFragment(IFragmentRefreshable refreshable) {
