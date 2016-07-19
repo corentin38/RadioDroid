@@ -46,41 +46,56 @@ public class ActivityMain extends ActivityBase implements SearchView.OnQueryText
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_main);
 		mToolbar = setUpToolbar(true);
+		Log.d(TAG, "onCreate");
 
 		clearFilesDirectory();
 
 		PlayerServiceUtil.bind(this);
 
+		if (savedInstanceState == null) {
+			initSideMenu();
+
+			SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+			Fragment first = null;
+			if (sharedPref.getBoolean("starred_at_startup", false)) {
+				FragmentStarred fragStarred = new FragmentStarred();
+				getSupportActionBar().setTitle(R.string.nav_item_starred);
+				fragSearchable = null;
+				fragRefreshable = null;
+				first = fragStarred;
+			} else {
+				FragmentTabs fragTabs = new FragmentTabs();
+				getSupportActionBar().setTitle(R.string.nav_item_stations);
+				fragRefreshable = fragTabs;
+				fragSearchable = fragTabs;
+				first = fragTabs;
+			}
+
+			FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+			fragmentTransaction.replace(R.id.containerView, first).commit();
+		}
+	}
+
+	private void initSideMenu() {
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 		ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout, R.string.app_name, R.string.app_name);
 		mDrawerLayout.addDrawerListener(mDrawerToggle);
 		mDrawerToggle.syncState();
 
-		initNavigationView();
-	}
-
-	private void initNavigationView() {
 		mNavigationView = (NavigationView) findViewById(R.id.my_navigation_view) ;
 		mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 			@Override
 			public boolean onNavigationItemSelected(MenuItem menuItem) {
+				Log.d(TAG, "onNavigationItemSelected");
 				mDrawerLayout.closeDrawers();
-
-				int itemId = menuItem.getItemId();
-				selectFragment(itemId);
-
+				dispatchNavigation(menuItem.getItemId());
 				return false;
 			}
 		});
 	}
 
-	private void selectFragment(int itemId) {
-		fragRefreshable = null;
-		fragSearchable = null;
-
-		menuItemRefresh.setVisible(false);
-		menuItemSearch.setVisible(false);
-
+	private void dispatchNavigation(int itemId) {
 		Fragment next = null;
 
 		switch (itemId) {
@@ -90,35 +105,55 @@ public class ActivityMain extends ActivityBase implements SearchView.OnQueryText
 			startActivity(intent);
 			return;
 
-		case R.id.nav_item_stations: next = new FragmentTabs(); break;
-		case R.id.nav_item_starred: next = new FragmentStarred(); break;
-		case R.id.nav_item_history: next = new FragmentHistory(); break;
+		case R.id.nav_item_stations:   next = new FragmentTabs();       break;
+		case R.id.nav_item_starred:    next = new FragmentStarred();    break;
+		case R.id.nav_item_history:    next = new FragmentHistory();    break;
 		case R.id.nav_item_serverinfo: next = new FragmentServerInfo(); break;
 		case R.id.nav_item_recordings: next = new FragmentRecordings(); break;
-		case R.id.nav_item_alarm: next = new FragmentAlarm(); break;
-		case R.id.nav_item_settings: next = new FragmentSettings(); break;
-		case R.id.nav_item_about: next = new FragmentAbout(); break;
+		case R.id.nav_item_alarm:      next = new FragmentAlarm();      break;
+		case R.id.nav_item_settings:   next = new FragmentSettings();   break;
+		case R.id.nav_item_about:      next = new FragmentAbout();      break;
 
 		default:
-			break;
+			return;
 		}
+
+		selectFragment(next);
+	}
+
+	private void selectFragment(Fragment next) {
+		Log.d(TAG, "selectFragment");
+		fragRefreshable = null;
+		fragSearchable = null;
+
+		menuItemRefresh.setVisible(false);
+		menuItemSearch.setVisible(false);
 
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		transaction.replace(R.id.containerView, next).commit();
 	}
 
 	public void setRefreshableFragment(IFragmentRefreshable refreshable) {
-		menuItemRefresh.setVisible(true);
+		Log.d(TAG, "setRefreshableFragment");
+		if (menuItemRefresh != null) {
+			menuItemRefresh.setVisible(true);
+		}
 		fragRefreshable = refreshable;
 	}
 
 	public void setSearchableFragment(IFragmentSearchable searchable) {
-		menuItemSearch.setVisible(true);
+		Log.d(TAG, "setSearchableFragment");
+		if (menuItemSearch != null) {
+			menuItemSearch.setVisible(true);
+		}
 		fragSearchable = searchable;
 	}
 
 	public void setToolbarTitle(int titleId) {
-		mToolbar.setTitle(titleId);
+		Log.d(TAG, "setToolbarTitle");
+		if (mToolbar != null) {
+			mToolbar.setTitle(titleId);
+		}
 	}
 
 	private void clearFilesDirectory() {
@@ -154,6 +189,7 @@ public class ActivityMain extends ActivityBase implements SearchView.OnQueryText
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		Log.d(TAG, "onCreateOptionsMenu");
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_main, menu);
 
@@ -187,32 +223,6 @@ public class ActivityMain extends ActivityBase implements SearchView.OnQueryText
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	protected void onResume() {
-		Log.d(TAG, "onResume");
-		super.onResume();
-
-		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
-		Fragment first = null;
-		if (sharedPref.getBoolean("starred_at_startup", false)) {
-			FragmentStarred fragStarred = new FragmentStarred();
-			getSupportActionBar().setTitle(R.string.nav_item_starred);
-			fragSearchable = null;
-			fragRefreshable = null;
-			first = fragStarred;
-		} else {
-			FragmentTabs fragTabs = new FragmentTabs();
-			getSupportActionBar().setTitle(R.string.nav_item_stations);
-			fragRefreshable = fragTabs;
-			fragSearchable = fragTabs;
-			first = fragTabs;
-		}
-
-		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-		fragmentTransaction.replace(R.id.containerView, first).commit();
 	}
 
 	public void Search(String query){
